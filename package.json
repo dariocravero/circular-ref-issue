@@ -1,0 +1,62 @@
+{
+  "name": "rce",
+  "version": "0.0.1",
+  "description": "rce",
+  "main": "src/index.js",
+  "readme": "README.md",
+  "keywords": [
+    "rce",
+    "hmh"
+  ],
+  "repository": "https://bitbucket.org/hmh-rce/rce",
+  "bugs": "https://jira.hmhpub.com/browse/UCE#selectedTab=com.atlassian.jira.plugin.system.project%3Aissues-panel",
+  "dependencies": {
+    "immutable": "^3.6.2",
+    "normalize-css": "^2.3.1",
+    "marty": "^0.8.9",
+    "react": "^0.12.2",
+    "readium-js-dist": "^0.0.3"
+  },
+  "devDependencies": {
+    "6to5": "^3.3.2",
+    "6to5ify": "^4.0.0",
+    "browserify": "^8.1.1",
+    "envify": "^3.2.0",
+    "ftp-deploy": "^1.0.0",
+    "jest-cli": "~0.2.1",
+    "livereloadify": "^2.0.0",
+    "moment": "^2.9.0",
+    "node-static": "^0.7.6",
+    "reactify": "^1.0.0",
+    "uglify-js": "~2.4.16",
+    "underscore": "^1.7.0",
+    "watchify": "^2.2.1"
+  },
+  "scripts": {
+    "build": "npm run build-app & npm run build-rce",
+    "build-app": "NODE_ENV=production browserify src/index.js > ./dist/app.js && uglifyjs ./dist/app.js -cm > ./dist/app.min.js",
+    "build-rce": "NODE_ENV=production browserify . > ./dist/rce.js && uglifyjs ./dist/rce.js -cm > ./dist/rce.min.js",
+    "deploy": "npm run build-app && node deploy.js",
+    "livereload": "livereloadify ./public",
+    "start": "npm run watch & npm run livereload & npm run static",
+    "static": "static ./public --port 3000",
+    "test": "jest",
+    "watch": "watchify -o ./public/app.js -v -d src/index.js"
+  },
+  "author": "Darío Javier Cravero <dario.cravero@hmhco.com>",
+  "contributors": [
+    "Neil Buckley <neil.buckley@hmhco.com>",
+    "Paul Grattan <paul.grattan@hmhco.com>"
+  ],
+  "license": "TBD",
+  "browserify": {
+    "transform": [
+      "6to5ify",
+      "reactify",
+      "envify"
+    ]
+  },
+  "jest": {
+    "rootDir": "./src"
+  }
+}
